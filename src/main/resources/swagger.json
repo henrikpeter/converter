@@ -1,0 +1,40 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.1.1",
+    "title" : "My API"
+  },
+  "paths" : {
+    "/service/convert" : {
+      "post" : {
+        "summary" : "converts a number to plain text",
+        "description" : "",
+        "operationId" : "convertNumberToText",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "text/plain" ],
+        "responses" : {
+          "200" : {
+            "description" : "number is converted"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "500" : {
+            "description" : "Internal error"
+          }
+        }
+      }
+    },
+    "/service/hello" : {
+      "get" : {
+        "operationId" : "hello",
+        "produces" : [ "text/plain" ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    }
+  }
+}

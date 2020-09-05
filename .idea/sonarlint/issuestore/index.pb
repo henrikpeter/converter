@@ -1,0 +1,29 @@
+
+O
+src/main/resources/numbers.json,8\b\8b591767db34980733d34a1f6e461c385340a736
+Q
+!.idea/artifacts/converter_war.xml,0\4\04d6614c1372e157b2a072ba8322ca7aa9e3db9b
+Z
+*.idea/artifacts/converter_war_exploded.xml,a\a\aad46bf71f609e62955eabe3e650f655b1c42207
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+Q
+!src/main/webapp/WEB-INF/beans.xml,8\3\83008b1a88ba03a2548bb5b9ad0768c6c307d36c
+H
+src/main/webapp/o2c.html,a\6\a685ad9e05f219d5360c328fdd341eb04d1ad472
+J
+src/main/webapp/index.html,1\3\1337d72a3b1928dba82aa5210f5cdc0e88ce895b
+S
+#src/main/java/com/model/Number.java,4\c\4c41c41f390819385113ce10476a14b4b97777c4
+X
+(src/main/java/com/rest/Configurator.java,4\2\42479cf110acf78eb53a83c93a86ff0024feed31
+[
++src/test/java/com/rest/RestServiceTest.java,6\0\60f601b9127cdac83abe21b2d6b979513b3d8abf
+W
+'src/main/java/com/rest/RestService.java,8\d\8d35c05fe597da3480f07dbb3af84f9299d463a6
+`
+0src/main/java/com/converter/NumberConverter.java,9\9\99244fc78d861cc1df275081c443c67d11ce917b
+7
+pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
+d
+4src/test/java/com/converter/NumberConverterTest.java,7\5\75a7bf72cfaabcf809d42f5199ea2aea18360796
