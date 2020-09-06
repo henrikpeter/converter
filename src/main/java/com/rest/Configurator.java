@@ -4,7 +4,8 @@ import io.swagger.jaxrs.config.BeanConfig;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
- 
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationPath("/api")
 public class Configurator extends Application {
@@ -19,10 +20,11 @@ public class Configurator extends Application {
           beanConfig.setVersion("1.0.0");
           beanConfig.setSchemes(new String[]{"http"});
           beanConfig.setHost("localhost:8080");
-          beanConfig.setBasePath("/converter/api");
+          beanConfig.setBasePath("/api");
           beanConfig.setResourcePackage(RestService.class.getPackage().getName());
-          beanConfig.setTitle("Swagger UI for the converter service");
+          beanConfig.setTitle("Swagger for the converter service");
           beanConfig.setScan(true);
     }
+
 }
 
