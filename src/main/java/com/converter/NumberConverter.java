@@ -19,9 +19,11 @@ public class NumberConverter {
 
     private static final Logger logger = LoggerFactory.getLogger(NumberConverter.class);
     String jsonString;
-    private static final String DOLLAR = "Dollar";
-    private static final String CENT = "Cent";
-    private static final String THOUSAND = "Thousand";
+    private static final String DOLLAR = "dollar";
+    private static final String CENT = "cent";
+    private static final String THOUSAND = "thousand";
+    private static final String ERROR_TEXT_1 = "number must not be negative or higher than 999.999.99";
+    private static final String ERROR_TEXT_2 = "integer value could not be found in json array.";
 
     public NumberConverter() {
         //default constructor
@@ -37,11 +39,11 @@ public class NumberConverter {
      */
     public String convertNumberToText(double number) throws IllegalArgumentException, IOException, ParseException {
         if (number < 0 || number > 999999.99) {
-            throw new IllegalArgumentException("number must not be negative or higher than 999.999.99");
+            throw new IllegalArgumentException(ERROR_TEXT_1);
         }
         initJsonString();
         Map<String, String> dc = convertDoubleToStrings(number);
-        String result = convertDollarsToText(dc.get(DOLLAR)) + " Dollars" + " and " + convertCentToText(dc.get(CENT)) + " Cent";
+        String result = convertDollarsToText(dc.get(DOLLAR)) + " dollars" + " and " + convertCentToText(dc.get(CENT)) + " cent";
         return result.toUpperCase();
     }
 
@@ -89,7 +91,7 @@ public class NumberConverter {
         switch (dollarLength) {
             case 1:
                 //0 to 9
-                return convertNumberToText(Integer.parseInt(dollars));
+                return convertIntToText(Integer.parseInt(dollars));
             case 2:
                 //10 to 99
                 return convertTwoDigitsToText(dollars);
@@ -115,6 +117,11 @@ public class NumberConverter {
 
     /**
      * converts the value of the right side of the dot to text
+     * Because the input value is a double the value ex. 47.50 is rounded to 47.5
+     * This means that the string value becomes "47.5" and the length of the cent variable is 1.
+     * The real value is 50 so we have to find the text "fifty" and not five.
+     * The value "47.05" is not rounded and the length of the cent variable is 2.
+     * We then find the text "five" via the convertTwoDigitsToText method.
      *
      * @param cent
      * @return String
@@ -123,7 +130,7 @@ public class NumberConverter {
         int centLength = cent.length();
         if (centLength == 1) {
             int centAsInt = Integer.parseInt(cent) * 10;
-            return convertNumberToText(centAsInt);
+            return convertIntToText(centAsInt);
         } else {
             return convertTwoDigitsToText(cent);
         }
@@ -141,12 +148,12 @@ public class NumberConverter {
         int digitTwo = Integer.parseInt(dollar.substring(1, 2));
 
         if (dollarAsInt > 9 && dollarAsInt < 21) {
-            return convertNumberToText(dollarAsInt);
+            return convertIntToText(dollarAsInt);
         }
 
         final int digitOneMultiplied = digitOne * 10;
-        String digitOneMultipliedAsString = convertNumberToText(digitOneMultiplied);
-        String digitTwoAsString = convertNumberToText(digitTwo);
+        String digitOneMultipliedAsString = convertIntToText(digitOneMultiplied);
+        String digitTwoAsString = convertIntToText(digitTwo);
         return digitOneMultipliedAsString + " " + digitTwoAsString;
     }
 
@@ -159,7 +166,7 @@ public class NumberConverter {
     String convertThreeDigitsToText(String dollar) {
         int digitOne = Integer.parseInt(dollar.substring(0, 1));
         int digitTwoAndThree = Integer.parseInt(dollar.substring(1, 3));
-        String digitOneAsString = convertNumberToText(digitOne) + " hundred";
+        String digitOneAsString = convertIntToText(digitOne) + " hundred";
         if (digitTwoAndThree > 0) {
             return digitOneAsString + " and " + convertTwoDigitsToText(Integer.toString(digitTwoAndThree));
         }
@@ -176,7 +183,7 @@ public class NumberConverter {
     String convertFourDigitsToText(String dollar) {
         int digitOne = Integer.parseInt(dollar.substring(0, 1));
         int digitTwoTilFour = Integer.parseInt(dollar.substring(1, 4));
-        String digitOneAsString = convertNumberToText(digitOne) + " " + THOUSAND;
+        String digitOneAsString = convertIntToText(digitOne) + " " + THOUSAND;
         if (digitTwoTilFour > 0) {
             return digitOneAsString + " " + convertThreeDigitsToText(Integer.toString(digitTwoTilFour));
         }
@@ -222,13 +229,13 @@ public class NumberConverter {
      * @param number
      * @return String
      */
-    String convertNumberToText(int number) {
+    String convertIntToText(int number) {
         try {
             List<Map<String, String>> dataList = JsonPath.parse(jsonString).read("$[?(@.number == " + number + ")]");
             return dataList.get(0).get("text");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            throw e;
+            logger.error(ERROR_TEXT_2);
+            throw new IllegalArgumentException(ERROR_TEXT_2);
         }
     }
 }

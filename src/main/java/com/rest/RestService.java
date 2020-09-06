@@ -34,7 +34,7 @@ public class RestService {
 
     @POST
     @Path("/convert")
-    @ApiOperation(value = "converts a number to plain text")
+    @ApiOperation(value = "converts a double value to plain text")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "number is converted"),
             @ApiResponse(code = 400, message = "Invalid input"),
             @ApiResponse(code = 500, message = "Internal error") })
